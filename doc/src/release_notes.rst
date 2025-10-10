@@ -13,8 +13,31 @@ Release changes are listed as affecting Thin Mode (the default runtime behavior
 of python-oracledb), as affecting the optional :ref:`Thick Mode
 <enablingthick>`, or as being 'Common' for changes that impact both modes.
 
-oracledb `3.4.0 <https://github.com/oracle/python-oracledb/compare/v3.3.0...v3.4.0>`__ (TBD)
+oracledb `3.5.0 <https://github.com/oracle/python-oracledb/compare/v3.4.0...v3.5.0>`__ (TBD)
 --------------------------------------------------------------------------------------------
+
+Thin Mode Changes
++++++++++++++++++
+
+#)  Fixed bug when using bind variables with scrollable cursors.
+
+Thick Mode Changes
+++++++++++++++++++
+
+#)  Fixed segfault on some platforms when trying to execute queries returning
+    vector columns
+    (`ODPI-C <https://github.com/oracle/odpi>`__ dependency update).
+
+Common Changes
+++++++++++++++
+
+#)  Fixed bug that caused ``ORA-03137: malformed TTC packet from client
+    rejected`` exception to be raised when attempting to call
+    :meth:`Cursor.parse()` on a scrollable cursor.
+
+
+oracledb `3.4.0 <https://github.com/oracle/python-oracledb/compare/v3.3.0...v3.4.0>`__ (October 2025)
+-----------------------------------------------------------------------------------------------------
 
 Thin Mode Changes
 +++++++++++++++++
@@ -29,6 +52,8 @@ Thin Mode Changes
     :attr:`oracledb.DB_TYPE_TIMESTAMP`, :attr:`oracledb.DB_TYPE_TIMESTAMP_TZ`
     and :attr:`oracledb.DB_TYPE_TIMESTAMP_LTZ`.
 #)  Fixed bug validating the database host during connection.
+#)  Fixed bug causing hang due to blocked task cancellation during
+    :ref:`asyncio <concurrentprogramming>` loop shutdown.
 #)  Internal change: refactor encoding of Oracle data types.
 #)  Internal change: small performance improvement sending bytes on the
     network transport.
