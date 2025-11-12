@@ -21,11 +21,11 @@ Database Authentication
 
 Database Authentication is the most basic authentication method that allows
 users to connect to Oracle Database by using a valid database username and
-their associated password. Oracle Database verifies the username and password
-specified in the python-oracledb connection method with the information stored
-in the database. See `Database Authentication of Users <https://www.oracle.com
-/pls/topic/lookup?ctx=dblatest&id=GUID-1F783131-CD1C-4EA0-9300-C132651B0700>`__
-for more information.
+their associated password. Oracle Database verifies the username and
+password specified in the python-oracledb connection method with the
+information stored in the database. See `Database Authentication of Users
+<https://www.oracle.com/pls/topic/lookup?ctx=dblatest&id=GUID-1F783131-CD1C-
+4EA0-9300-C132651B0700>`__ for more information.
 
 :ref:`Standalone connections <standaloneconnection>` and
 :ref:`pooled connections <connpooling>` can be created in python-oracledb Thin
@@ -149,8 +149,8 @@ Using an Oracle Wallet for External Authentication
 
 The following steps give an overview of using an Oracle Wallet.  Wallets should
 be kept securely.  Wallets can be managed with `Oracle Wallet Manager
-<https://www.oracle.com/pls/topic/lookup?ctx=dblatest&
-id=GUID-E3E16C82-E174-4814-98D5-EADF1BCB3C37>`__.
+<https://www.oracle.com/pls/topic/lookup?ctx=db21&id=GUID-E3E16C82-E174-4814-
+98D5-EADF1BCB3C37>`__.
 
 In this example the wallet is created for the ``myuser`` schema in the
 directory ``/home/oracle/wallet_dir``.  The ``mkstore`` command is available
@@ -334,8 +334,8 @@ steps give an overview of how to implement OS Authentication on Linux.
         ------------------------------------ ----------- ------------------------------
         os_authent_prefix                    string      ops$
 
-3.  Create an Oracle database user using the ``os_authent_prefix`` determined in
-    step 2, and the operating system user name:
+3.  Create an Oracle Database user using the ``os_authent_prefix`` determined
+    in step 2, and the operating system user name:
 
    .. code-block:: sql
 
@@ -354,7 +354,7 @@ If your database is not on the same computer as Python, you can perform testing
 by setting the database configuration parameter ``remote_os_authent=true``.
 Beware of security concerns because this is insecure.
 
-See `Oracle Database Security Guide
+See `Oracle AI Database Security Guide
 <https://www.oracle.com/pls/topic/lookup?ctx=dblatest&
 id=GUID-37BECE32-58D5-43BF-A098-97936D66968F>`__ for more information about
 Operating System Authentication.
@@ -690,20 +690,24 @@ the following table.
       - Description
       - Required or Optional
     * - ``auth_type``
-      - The authentication type. The value should be the string "ConfigFileAuthentication", "SimpleAuthentication", or "InstancePrincipal".
+      - The authentication type. The value should be the string "ConfigFileAuthentication", "InstancePrincipal", "SecurityToken", "SecurityTokenSimple" or "SimpleAuthentication".
 
         With Configuration File Authentication, the location of a configuration file containing the necessary information must be provided. By default, this file is located at */home/username/.oci/config*, unless a custom location is specified during OCI IAM setup.
 
-        With Simple Authentication, the individual configuration parameters can be provided at runtime.
-
         With Instance Principal Authentication, OCI compute instances can be authorized to access services on Oracle Cloud such as Oracle Autonomous Database. Python-oracledb applications running on such a compute instance are automatically authenticated, eliminating the need to provide database user credentials. This authentication method will only work on compute instances where internal network endpoints are reachable. See :ref:`instanceprincipalauth`.
+
+        With Security Token authentication or Session Token-based authentication, the authentication happens using *security_token_file* parameter present in the configuration file. By default, this file is located at */home/username/.oci/config*, unless a custom location is specified during OCI IAM setup. You also need to specify the *profile* which contains the *security_token_file* parameter.
+
+        With Security Token Simple authentication or Session Token-based Simple authentication, the authentication happens using *security_token_file* parameter. The individual configuration parameters can be provided at runtime.
+
+        With Simple Authentication, the individual configuration parameters can be provided at runtime.
 
         See `OCI SDK Authentication Methods <https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_authentication_methods.htm>`__ for more information.
       - Required
     * - ``user``
       - The Oracle Cloud Identifier (OCID) of the user invoking the API. For example, *ocid1.user.oc1..<unique_ID>*.
 
-        This parameter can be specified when the value of the ``auth_type`` key is "SimpleAuthentication".
+        This parameter can be specified when the value of the ``auth_type`` key is "SimpleAuthentication". This is not required when ``auth_type`` is "SecurityToken" or "SecurityTokenSimple"
       - Required
     * - ``key_file``
       - The full path and filename of the private key.
@@ -873,10 +877,10 @@ OAuth 2.0 Token-Based Authentication
 Oracle Cloud Infrastructure (OCI) users can be centrally managed in a Microsoft
 Entra ID (formerly Microsoft Azure Active Directory) service. Open
 Authorization (OAuth 2.0) token-based authentication allows users to
-authenticate to Oracle Database using Entra ID OAuth2 tokens. Ensure that you
-have a Microsoft Azure account and your Oracle Database is registered with
-Microsoft Entra ID. See `Configuring the Oracle Database for Microsoft Entra
-ID Integration <https://www.oracle.com/pls/topic/lookup?ctx=dblatest&id=
+authenticate to Oracle Database using Entra ID OAuth2 tokens. Ensure that
+you have a Microsoft Azure account and your Oracle Database is registered
+with Microsoft Entra ID. See `Configuring the Oracle Database for Microsoft
+Entra ID Integration <https://www.oracle.com/pls/topic/lookup?ctx=dblatest&id=
 GUID-0A60F22D-56A3-408D-8EC8-852C38C159C0>`_ for more information. Both Thin
 and Thick modes of the python-oracledb driver support OAuth 2.0 token-based
 authentication.
@@ -1425,9 +1429,9 @@ information, see `Accessing the Database Using an Instance Principal
 4BCE-91D0-239D287C638B>`__.
 
 Also, make sure that external authentication is enabled on Oracle ADB and
-Oracle Database parameter ``IDENTITY_PROVIDER_TYPE`` is set to *OCI_IAM*. For
-the steps, see `Enable IAM Authentication on ADB <https://docs.oracle.com/en/
-cloud/paas/autonomous-database/serverless/adbsb/enable-iam-authentication
+Oracle Database parameter ``IDENTITY_PROVIDER_TYPE`` is set to *OCI_IAM*.
+For the steps, see `Enable IAM Authentication on ADB <https://docs.oracle.com/
+en/cloud/paas/autonomous-database/serverless/adbsb/enable-iam-authentication
 .html>`__.
 
 **Step 6: Deploy your application on the Compute Instance**

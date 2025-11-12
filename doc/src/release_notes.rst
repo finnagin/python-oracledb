@@ -13,13 +13,43 @@ Release changes are listed as affecting Thin Mode (the default runtime behavior
 of python-oracledb), as affecting the optional :ref:`Thick Mode
 <enablingthick>`, or as being 'Common' for changes that impact both modes.
 
-oracledb `3.5.0 <https://github.com/oracle/python-oracledb/compare/v3.4.0...v3.5.0>`__ (TBD)
+oracledb `3.5.0 <https://github.com/oracle/python-oracledb/compare/v3.4.1...v3.5.0>`__ (TBD)
 --------------------------------------------------------------------------------------------
 
 Thin Mode Changes
 +++++++++++++++++
 
+Thick Mode Changes
+++++++++++++++++++
+
+Common Changes
+++++++++++++++
+
+#)  Added Session Token-based authentication support when using
+    :ref:`OCI Cloud Native Authentication <cloudnativeauthoci>`
+    (`issue 527 <https://github.com/oracle/python-oracledb/issues/527>`__).
+#)  Updated the `Jupyter notebook samples <https://github.com/oracle/
+    python-oracledb/tree/main/samples/notebooks>`__ to cover recent
+    python-oracledb features.
+
+
+oracledb `3.4.1 <https://github.com/oracle/python-oracledb/compare/v3.4.0...v3.4.1>`__ (November 2025)
+------------------------------------------------------------------------------------------------------
+
+Thin Mode Changes
++++++++++++++++++
+
+#)  Fixed bug when fetching a timestamp with nanosecond precision into a data
+    frame
+    (`issue 538 <https://github.com/oracle/python-oracledb/issues/538>`__).
+#)  Fixed bug when adding a call to a PL/SQL function which returns LOBs to a
+    :ref:`pipeline <pipelining>`.
 #)  Fixed bug when using bind variables with scrollable cursors.
+#)  Fixed bug when setting ``SOURCE_ROUTE`` on the ``DESCRIPTION`` section of a
+    full connect descriptor instead of the ``ADDRESS_LIST`` section.
+#)  Fixed bug that failed to handle the KeyboardInterrupt exception correctly
+    when the application caught this exception and then tried to reuse the
+    connection.
 
 Thick Mode Changes
 ++++++++++++++++++
@@ -34,6 +64,16 @@ Common Changes
 #)  Fixed bug that caused ``ORA-03137: malformed TTC packet from client
     rejected`` exception to be raised when attempting to call
     :meth:`Cursor.parse()` on a scrollable cursor.
+#)  Error ``DPY-2069: requested schema has {num_schema_columns} columns defined
+    but {num_fetched_columns} columns are being fetched`` is now raised when
+    the number of elements in the ``requested_schema`` parameter to
+    :meth:`Connection.fetch_df_all()` and :meth:`Connection.fetch_df_batches()`
+    doesn't match the number of columns being fetched. Previously this scenario
+    would throw unhelpful execptions or cause a segfault under certain
+    circumstances.
+#)  Error ``DPY-2068: scroll operation is not supported on a non-scrollable
+    cursor`` is now raised when using :meth:`Cursor.scroll()` method on a
+    non-scrollable cursor.
 
 
 oracledb `3.4.0 <https://github.com/oracle/python-oracledb/compare/v3.3.0...v3.4.0>`__ (October 2025)
@@ -3045,8 +3085,7 @@ cx_Oracle 6.0 beta 1 (April 2017)
     :ref:`subscription objects <subscrobj>`. Use the qos attribute instead.
 #)  Dropped deprecated parameters cqqos and rowids from the
     :meth:`Connection.subscribe()` method. Use the qos parameter instead as
-    shown in this `sample <https://github.com/oracle/python-cx_Oracle/blob/
-    main/samples/cqn.py>`__.
+    shown in the cx_Oracle sample cqn.py.
 
 
 cx_Oracle 5.3 (March 2017)

@@ -7,11 +7,7 @@ Installing python-oracledb
 ***************************
 
 The python-oracledb driver allows Python applications to connect to Oracle
-Database.
-
-The python-oracledb driver is the renamed, major version successor to cx_Oracle
-8.3.  For upgrade information, see :ref:`upgrading83`. The cx_Oracle driver is
-obsolete and should not be used for new development.
+Database with no extra libraries needed.
 
 .. figure:: /images/python-oracledb-thin-arch.png
    :alt: architecture of the python-oracledb driver
@@ -31,9 +27,10 @@ Specification.
 Quick Start python-oracledb Installation
 ========================================
 
-Python-oracledb is typically installed from Python's package repository
-`PyPI <https://pypi.org/project/oracledb/>`__ using `pip
-<https://pip.pypa.io/en/latest/installation/>`__.
+Python-oracledb is typically installed from Python's package repository `PyPI
+<https://pypi.org/project/oracledb/>`__ using `pip
+<https://pip.pypa.io/en/latest/installation/>`__ or `uv
+<https://pypi.org/project/uv/>`__.
 
 1. Install `Python 3 <https://www.python.org/downloads>`__ if it is not already
    available.
@@ -72,7 +69,7 @@ Python-oracledb is typically installed from Python's package repository
 
       un = "scott"
       cs = "localhost/orclpdb"
-      # cs = "localhost/freepdb1"   # for Oracle Database Free users
+      # cs = "localhost/freepdb1"   # for Oracle AI Database Free users
       # cs = "localhost/orclpdb1"   # some databases may have this service
       pw = getpass.getpass(f"Enter password for {un}@{cs}: ")
 
@@ -130,10 +127,10 @@ To connect to older Oracle Database releases you must have Oracle Client
 libraries installed, and enable python-oracledb's :ref:`Thick mode
 <enablingthick>`.
 
-In python-oracledb Thick mode, Oracle Database's standard client-server network
-interoperability allows connections between different versions of Oracle Client
-libraries and Oracle Database.  For current or previously certified
-configurations, see Oracle Support's `Doc ID 207303.1
+In python-oracledb Thick mode, Oracle Database's standard client-server
+network interoperability allows connections between different versions of
+Oracle Client libraries and Oracle Database.  For current or previously
+certified configurations, see Oracle Support's `Doc ID 207303.1
 <https://support.oracle.com/knowledge/Oracle%20Database%20Products/207303_1.html>`__.
 In summary:
 
@@ -208,22 +205,14 @@ resulting binary installed.  Compiling python-oracledb requires the
 this file is in the ``python-devel`` package or equivalent.
 
 On some platforms the Python binary may be called ``python3`` instead of
-``python``.  For example, to use the default Python 3.6 installation on Oracle
-Linux 8, install with:
-
-.. code-block:: shell
-
-    python3 -m pip install oracledb --upgrade
-
-Note it is recommended to use a more recent version Python, see `Python for
-Oracle Linux <https://yum.oracle.com/oracle-linux-python.html>`__.
+``python``.
 
 The installation ``--user`` option is useful when you do not have permission to
 write to system directories:
 
 .. code-block:: shell
 
-    python3 -m pip install oracledb --upgrade --user
+    python -m pip install oracledb --upgrade --user
 
 If you are behind a proxy, use the ``--proxy`` option. For example:
 
@@ -247,7 +236,7 @@ and 11.2 can be used.
   or "Basic Light" package for your operating system architecture.
 
 - Alternatively, use the client libraries already available in a locally
-  installed database such as the free `Oracle Database Free
+  installed database such as the free `Oracle AI Database Free
   <https://www.oracle.com/database/free/>`__ release.
 
 To use python-oracledb in Thick mode you must call
@@ -281,7 +270,8 @@ To use python-oracledb Thick mode with Oracle Instant Client zip files:
     <https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html>`__
 
   Oracle Instant Client version 23 will connect to Oracle Database 19 or later.
-  Oracle Instant Client version 19 will connect to Oracle Database 11.2 or later.
+  Oracle Instant Client version 19 will connect to Oracle Database 11.2 or
+  later.
 
   Oracle Database versions 23 and 19 are Long Term Support Releases. Note
   32-bit clients are not available on any platform for Oracle Database version
@@ -730,8 +720,7 @@ this version of the database.
 
 2. Optional Oracle configuration files such as ``tnsnames.ora``,
    ``sqlnet.ora``, or ``oraaccess.xml`` can be placed in the
-   ``network\admin`` subdirectory of the Oracle Database software
-   installation.
+   ``network\admin`` subdirectory of the Oracle Database software installation.
 
    Alternatively, pass ``config_dir`` to :meth:`oracledb.init_oracle_client()`
    as shown in the previous section, or set ``TNS_ADMIN`` to the directory
