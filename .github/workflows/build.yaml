@@ -21,7 +21,6 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          repository: oracle/python-oracledb
           submodules: true
 
       - uses: actions/setup-python@v5
@@ -59,7 +58,6 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          repository: oracle/python-oracledb
           submodules: true
 
       - name: Generate script
@@ -105,7 +103,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: oracle/python-oracledb
           submodules: true
 
       - uses: actions/setup-python@v5
@@ -147,7 +144,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: oracle/python-oracledb
           submodules: true
 
       - uses: actions/setup-python@v5
